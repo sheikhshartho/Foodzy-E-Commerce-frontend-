@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// 🔹 LOGIN API CALL
+//  LOGIN API CALL
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (loginData, { rejectWithValue }) => {
@@ -12,7 +12,6 @@ export const loginUser = createAsyncThunk(
       );
 
       if (res.data.success) {
-        // localStorage এ save
         localStorage.setItem("user", JSON.stringify(res.data.user));
         return res.data.user;
       } else {

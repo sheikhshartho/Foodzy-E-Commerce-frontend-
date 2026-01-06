@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/login/login";
 import Logo from "../../public/Group.svg";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, user } = useSelector((state) => state.auth);
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -25,6 +26,12 @@ const Login = () => {
     dispatch(loginUser(loginData));
   };
 
+    useEffect(() => {
+      if (user) {
+        navigate("/profile");
+      }
+    }, [user, navigate]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="w-full max-w-md bg-white p-8 rounded-lg border border-[#E9E9E9]">
@@ -41,10 +48,11 @@ const Login = () => {
               Email
             </label>
             <input
-              name="Enter emailw"
+              name="email"
+              type="text"
               onChange={handleChange}
-              placeholder="Email"
-              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-[#f53f327a] "
+              placeholder="Enter email"
+              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
             />
           </div>
           <div>
@@ -56,8 +64,9 @@ const Login = () => {
               type="password"
               onChange={handleChange}
               placeholder="Enter password"
-              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-[#f53f327a] "
+              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
             />
+            {error && <p className="text-red-500 text-sm ">{error}</p>}
           </div>
 
           <button
@@ -67,8 +76,6 @@ const Login = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
         </form>
 
         <p className="text-center mt-4 text-sm">

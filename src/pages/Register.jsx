@@ -1,43 +1,37 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../public/Group.svg";
 const Register = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  
 
-    const handleChange = (e) => {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.value,
-      });
-    };
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      try {
-        const res = await axios.post(
-          "http://localhost/root-project/Backend/auth/user.php",
-          formData
-        );
-        // console.log(res)
-        // console.log(res.data.success);
-        if (res.data.success === true) {
-          // alert("Registration Successful");
-          navigate("/login");
-        }
-        // alert(res.data.message);
-      } catch (err) {
-        console.error(err);
+    try {
+      const res = await axios.post(
+        "http://localhost/root-project/Backend/auth/user.php",
+        formData
+      );
+      if (res.data.success === true) {
+        navigate("/login");
       }
-    };
-
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
@@ -64,7 +58,7 @@ const Register = () => {
               placeholder="Enter your name"
               value={formData.name}
               onChange={handleChange}
-              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-[#f53f327a] "
+              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
             />
           </div>
 
@@ -79,7 +73,7 @@ const Register = () => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-[#f53f327a] "
+              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
             />
           </div>
 
@@ -94,7 +88,7 @@ const Register = () => {
               placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}
-              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-[#f53f327a] "
+              className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
             />
           </div>
 

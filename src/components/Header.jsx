@@ -1,10 +1,15 @@
-import React from 'react';
-import User from '../Icon/User'
+import React from "react";
+import User from "../Icon/User";
 import { NavLink } from "react-router";
 import Logo from "../../public/Group.svg";
 import ShoppingCart from "../Icon/ShoppingCart";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const Header = () => {
+
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div className="flex justify-between items-center p-5 border-b border-gray-300 ">
       <div className="flex items-center gap-1">
@@ -19,18 +24,21 @@ const Header = () => {
       <nav>
         <ul className="flex items-center gap-4">
           <li>
-            <a href="">Home</a>
+            <NavLink>Home</NavLink>
           </li>
           <li>
-            <a href="">About</a>
+            <NavLink>About</NavLink>
           </li>
           <li>
-            <a href="">Produvt</a>
+            <NavLink>Produvt</NavLink>
           </li>
         </ul>
       </nav>
       <div className="flex items-center gap-4">
-        <Link to="/login" className="flex items-center gap- cursor-pointer">
+        <Link
+          to={user ? "/profile" : "/login"}
+          className="flex items-center gap- cursor-pointer"
+        >
           <User />
           <h1>Account</h1>
         </Link>
