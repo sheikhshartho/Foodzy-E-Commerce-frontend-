@@ -43,6 +43,7 @@ const AddProducts = () => {
               Title
             </label>
             <input
+              maxLength={255}
               name="title"
               value={productData.title}
               onChange={handleChange}
@@ -56,6 +57,7 @@ const AddProducts = () => {
               Category
             </label>
             <input
+              maxLength={100}
               name="category"
               value={productData.category}
               onChange={handleChange}
@@ -153,6 +155,7 @@ const AddProducts = () => {
               Thumbnail
             </label>
             <input
+              maxLength={255}
               name="thumbnail"
               value={productData.thumbnail}
               onChange={handleChange}
@@ -168,6 +171,7 @@ const AddProducts = () => {
               Warranty information
             </label>
             <input
+              maxLength={255}
               name="warranty"
               value={productData.warranty}
               onChange={handleChange}
@@ -181,6 +185,7 @@ const AddProducts = () => {
               Shipping information
             </label>
             <input
+              maxLength={255}
               name="shipping"
               value={productData.shipping}
               onChange={handleChange}
@@ -196,6 +201,7 @@ const AddProducts = () => {
               Availability status
             </label>
             <input
+              maxLength={50}
               name="availability"
               value={productData.availability}
               onChange={handleChange}
@@ -209,6 +215,7 @@ const AddProducts = () => {
               Return policy
             </label>
             <input
+              maxLength={100}
               name="returnPolicy"
               value={productData.returnPolicy}
               onChange={handleChange}

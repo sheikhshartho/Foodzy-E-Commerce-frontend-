@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const PostProduct = createAsyncThunk(
   "product/PostProduct",
@@ -26,10 +27,44 @@ export const PostProduct = createAsyncThunk(
   }
 );
 
+export const showProducts = createAsyncThunk(
+  "product/showProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        "http://localhost/root-project/Backend/products/"
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error, "this is error ");
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        "http://localhost/root-project/Backend/auth/user.php",
+        { data: { id } }
+      );
+      console.log(res);
+      return id;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to delete user"
+      );
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
     product: null,
+    products: [],
     loading: false,
     error: null,
     success: false,
@@ -57,6 +92,31 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.success = false;
+      })
+      .addCase(showProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(showProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(showProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = state.products.filter(
+          (product) => product.id !== action.payload
+        );
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

@@ -1,8 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteUser, updateUser } from "../features/login/login";
 
 const ShowUser = ({ user }) => {
-  const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const isAdmin = user?.role_ENUM === "admin";
@@ -54,11 +53,7 @@ const ShowUser = ({ user }) => {
           onClick={hanldleDelet}
           className=" bg-[#F53E32] w-25 text-white text-sm  p-2 rounded cursor-pointer"
         >
-          {loading ? (
-            <span className="loading loading-dots loading-sm"></span>
-          ) : (
-            "Delete user"
-          )}
+          Delete user
         </button>
       </div>
     </div>

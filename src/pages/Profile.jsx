@@ -1,22 +1,23 @@
+import React, { useEffect, useState } from "react";
 import AdminProfile from "../adminControl/AdminProfile";
 import Customar from "../UsersCompo/Customar";
 
 const Profile = () => {
-  return (
-    <div className="max-w-360 mx-auto mt-8">
-      <div className="border " >
-        <h1 className="text-center text-2xl font-bold mt-10">
-          Tis is customer porfile
-        </h1>
-        <Customar />
-      </div>
+  const [isAdmin, setIsAdmin] = useState(false);
 
-      <div className="border mt-10" >
-        <h1 className="text-center text-2xl font-bold mt-10">
-          this is admin profile
-        </h1>
-        <AdminProfile />
-      </div>
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setTimeout(() => {
+        setIsAdmin(user?.role === "admin");
+      }, 0);
+    }
+  }, []);
+
+  return (
+    <div className="max-w-360 mx-auto my-8">
+      {isAdmin ? <AdminProfile /> : <Customar />}
     </div>
   );
 };

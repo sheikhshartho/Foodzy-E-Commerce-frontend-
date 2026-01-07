@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showUsers } from "../features/login/login";
-import ShowUser from "./ShowUser";
+import { showProducts } from "../features/products/products";
+import ShowProducts from "./ShowProducts";
 
-const Users = () => {
+const Products = () => {
   const [showUser, setShowUser] = useState(false);
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.auth);
+  const { products } = useSelector((state) => state.product);
 
   useEffect(() => {
-    dispatch(showUsers());
+    dispatch(showProducts());
   }, [dispatch]);
 
   return (
     <div className="">
       <div className="flex items-center justify-between p-8 rounded-lg border border-[#E9E9E9] mt-4">
-        <h1 className="text-2xl font-bold mb-4">See all user</h1>
+        <h1 className="text-2xl font-bold mb-4">See all Products</h1>
         <button
           onClick={() => setShowUser(!showUser)}
           className=" bg-[#F53E32] text-white p-2 rounded cursor-pointer "
         >
-          {showUser ? "Hide user" : "Show user"}
+          {showUser ? "Hide products" : "Show products"}
         </button>
       </div>
-      {showUser && users.map((user) => <ShowUser key={user.id} user={user} />)}
+      {showUser &&
+        products.map((product) => (
+          <ShowProducts key={product.id} product={product} />
+        ))}
     </div>
   );
 };
 
-export default Users;
+export default Products;
