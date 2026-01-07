@@ -23,10 +23,27 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// SHOW ALL USERS - FIXED
+export const showUsers = createAsyncThunk(
+  "auth/showUsers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        "http://localhost/root-project/Backend/auth/user.php"
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error, "this is error ");
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: JSON.parse(localStorage.getItem("user")) || null,
+    users: [],
     loading: false,
     error: null,
   },
@@ -47,6 +64,18 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(showUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(showUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+      })
+      .addCase(showUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

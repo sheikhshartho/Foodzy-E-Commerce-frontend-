@@ -74,7 +74,11 @@ const Login = () => {
             disabled={loading}
             className="w-full bg-[#F53E32] text-white py-2 rounded"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (
+              <span className="loading loading-dots loading-sm"></span>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 

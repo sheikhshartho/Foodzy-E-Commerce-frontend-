@@ -6,7 +6,8 @@ import { PostProduct } from "../features/products/products";
 
 const AddProducts = () => {
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector((state) => state.product);
+
+  const { success, loading } = useSelector((state) => state.product);
   const [productData, setProductData] = useState({
     title: "",
     category: "",
@@ -45,7 +46,7 @@ const AddProducts = () => {
               name="title"
               value={productData.title}
               onChange={handleChange}
-              className=" border border-[#E9E9E9] text-black mt-1 w-full p-6  rounded-md focus:outline-none mb-6  "
+              className="border border-[#E9E9E9] text-black mt-1 w-full p-6  rounded-md focus:outline-none mb-6"
               type="text"
               placeholder="Add your product title"
             />
@@ -217,11 +218,22 @@ const AddProducts = () => {
             />
           </div>
         </div>
+        {success && (
+          <div className="bg-green-100 border border-green-200 p-5 rounded-2xl my-4 flex  items-center justify-between">
+            <h1 className="font-bold text-green-800 text-xl">
+              Your product added successfully
+            </h1>
+          </div>
+        )}
         <button
           onClick={handleSubmit}
-          className=" bg-[#F53E32] text-white p-2 rounded cursor-pointer "
+          className="bg-[#F53E32] w-30 text-white p-2 rounded cursor-pointer"
         >
-          Add product
+          {loading ? (
+            <span className="loading loading-dots loading-sm"></span>
+          ) : (
+            "Add product"
+          )}
         </button>
       </div>
     </div>

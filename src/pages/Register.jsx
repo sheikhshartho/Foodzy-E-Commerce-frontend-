@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../public/Group.svg";
+import { useSelector } from "react-redux";
 const Register = () => {
+  const { loading} = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -97,7 +99,11 @@ const Register = () => {
             type="submit"
             className="w-full bg-[#F53E32] text-white py-2 rounded-md hover:bg-[#f03023] transition"
           >
-            Register
+            {loading ? (
+              <span className="loading loading-dots loading-sm"></span>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 

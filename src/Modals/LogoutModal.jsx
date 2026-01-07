@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 
 const LogoutModal = ({ setShowModal }) => {
+  const { loading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -45,9 +46,13 @@ const LogoutModal = ({ setShowModal }) => {
             </button>
             <button
               onClick={handleLogout}
-              className="px-6 py-2 text-white bg-red-600 rounded-md hover:bg-red-700 transition cursor-pointer"
+              className=" bg-[#F53E32] w-20 text-white p-2 rounded cursor-pointer"
             >
-              Logout
+              {loading ? (
+                <span className="loading loading-dots loading-sm"></span>
+              ) : (
+                "Logout"
+              )}
             </button>
           </div>
         </div>
