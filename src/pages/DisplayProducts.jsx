@@ -1,22 +1,22 @@
 import React from "react";
 import StarIcon from "../Icon/StarIcon";
 import CardButtonIcon from "../Icon/CardButtonIcon";
+import { useNavigate } from "react-router";
 
 const DisplayProducts = (product) => {
-  const {
-    title,
-    thumbnail,
-    brand,
-    rating,
-    price,
-    availability_status,
-  } = product.product;
+  const navigate = useNavigate();
+  const { id, title, thumbnail, brand, rating, price, availability_status } =
+    product.product;
 
-
-
+  const handleClick = (id) => {
+    navigate(`/products/${id}`);
+  };
 
   return (
-    <div className="p-8 rounded-lg border border-[#E9E9E9] ">
+    <div
+      onClick={() => handleClick(id)}
+      className="p-8 rounded-lg border border-[#E9E9E9] "
+    >
       <div className="w-74 h-64 overflow-hidden">
         <img className="w-full h-full object-cover" src={thumbnail} alt="" />
       </div>

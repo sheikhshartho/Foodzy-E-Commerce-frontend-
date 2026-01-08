@@ -13,6 +13,7 @@ import About from "./pages/About.jsx";
 import Home from "./pages/Home.jsx";
 import Card from "./pages/Card.jsx";
 import GetProducts from "./pages/GetProducts.jsx";
+import ProductDetails from "./pages/ProductDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/card",
         element: <Card />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
       },
     ],
   },
