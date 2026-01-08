@@ -11,8 +11,8 @@ import { store } from "./store/store.js";
 import Profile from "./pages/Profile.jsx";
 import About from "./pages/About.jsx";
 import Home from "./pages/Home.jsx";
-import DisplayProducts from "./pages/DisplayProducts.jsx";
 import Card from "./pages/Card.jsx";
+import GetProducts from "./pages/GetProducts.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <DisplayProducts />,
+        element: <GetProducts />,
       },
       {
         path: "/card",
