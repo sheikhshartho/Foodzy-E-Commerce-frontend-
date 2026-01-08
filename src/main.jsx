@@ -10,6 +10,9 @@ import Register from "./pages/Register.jsx";
 import { store } from "./store/store.js";
 import Profile from "./pages/Profile.jsx";
 import About from "./pages/About.jsx";
+import Home from "./pages/Home.jsx";
+import DisplayProducts from "./pages/DisplayProducts.jsx";
+import Card from "./pages/Card.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,10 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "/",
+        element: <Home />,
+      },
+      {
         path: "/register",
         element: <Register />,
       },
@@ -30,8 +37,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About/>
-      }
+        element: <About />,
+      },
+      {
+        path: "/products",
+        element: <DisplayProducts />,
+      },
+      {
+        path: "/card",
+        element: <Card />,
+      },
     ],
   },
 ]);

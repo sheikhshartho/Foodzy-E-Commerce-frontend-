@@ -44,11 +44,11 @@ export const deleteUser = createAsyncThunk(
   "auth/deleteUser",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await axios.delete(
+      await axios.delete(
         "http://localhost/root-project/Backend/auth/user.php",
         { data: { id } }
       );
-      console.log(res);
+
       return id;
     } catch (error) {
       return rejectWithValue(
@@ -154,7 +154,7 @@ const authSlice = createSlice({
 
         const user = state.users.find((u) => u.id === id);
         if (user) {
-          user.role_ENUM = role; 
+          user.role_ENUM = role;
         }
       })
 

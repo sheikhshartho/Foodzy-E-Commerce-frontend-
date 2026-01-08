@@ -46,15 +46,14 @@ export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await axios.delete(
-        "http://localhost/root-project/Backend/auth/user.php",
-        { data: { id } }
-      );
-      console.log(res);
+      await axios.delete("http://localhost/root-project/Backend/products/", {
+        data: { id },
+      });
+
       return id;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to delete user"
+        error.response?.data?.message || "Failed to delete product"
       );
     }
   }
