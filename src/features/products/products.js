@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// POST PRODUCT
 export const PostProduct = createAsyncThunk(
   "product/PostProduct",
   async (productData, { rejectWithValue }) => {
@@ -27,6 +28,7 @@ export const PostProduct = createAsyncThunk(
   }
 );
 
+// SHOW PRODUCT
 export const showProducts = createAsyncThunk(
   "product/showProducts",
   async (_, { rejectWithValue }) => {
@@ -42,6 +44,7 @@ export const showProducts = createAsyncThunk(
   }
 );
 
+// DELETE PRODUCT
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
   async (id, { rejectWithValue }) => {
@@ -54,6 +57,33 @@ export const deleteProduct = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to delete product"
+      );
+    }
+  }
+);
+
+// UPDATE PRODUCT
+export const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async (productData, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(
+        "http://localhost/root-project/Backend/products/",
+        productData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.data.success) {
+        return productData;
+      } else {
+        return rejectWithValue(res.data.message);
+      }
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update product"
       );
     }
   }
@@ -77,6 +107,8 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
+      // POST PRODUCT
       .addCase(PostProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -92,6 +124,8 @@ const productSlice = createSlice({
         state.error = action.payload;
         state.success = false;
       })
+
+      // SHOW PRODUCT
       .addCase(showProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -104,6 +138,8 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // DELETE PRODUCT
       .addCase(deleteProduct.pending, (state) => {
         state.loading = true;
       })
@@ -114,6 +150,21 @@ const productSlice = createSlice({
         );
       })
       .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // UPDATE PRODUCT
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        const { id, postType } = action.payload;
+        const prod = state.products.find((p) => p.id === id);
+        if (prod) {
+          prod.postType = postType;
+        }
+      })
+
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

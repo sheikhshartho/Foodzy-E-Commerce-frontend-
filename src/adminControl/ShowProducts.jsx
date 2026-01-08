@@ -1,13 +1,21 @@
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteProduct } from "../features/products/products";
+import { deleteProduct, updateProduct } from "../features/products/products";
 const ShowProducts = ({ product }) => {
-  const [isPublish, setIsPublish] = useState(false);
+  const isPublish = product?.postType == "Publish";
   const dispatch = useDispatch();
 
   const hanldleDelet = () => {
     dispatch(deleteProduct(product.id));
   };
+
+const handlePostTypeUpdate = () => {
+  dispatch(
+    updateProduct({
+      id: product.id,
+      postType: isPublish ? "Unpublish" : "Publish",
+    })
+  );
+};
 
   return (
     <div className="flex justify-between items-end p-8 rounded-lg border border-[#E9E9E9] mt-4 ">
@@ -31,12 +39,12 @@ const ShowProducts = ({ product }) => {
       </div>
       <div className="flex items-center gap-2 ">
         <button
+          onClick={handlePostTypeUpdate}
           className={`w-25 text-white text-sm  p-2 rounded cursor-pointer  ${
-            isPublish ? "bg-[#007bff]" : "bg-[#03a00b]"
+            !isPublish ? "bg-[#007bff]" : "bg-[#03a00b]"
           } `}
-          onClick={() => setIsPublish(!isPublish)}
         >
-          {isPublish ? "Make Live" : "Make Draft"}
+          {!isPublish ? "Publish" : "Unpublish"}
         </button>
         <button
           onClick={hanldleDelet}

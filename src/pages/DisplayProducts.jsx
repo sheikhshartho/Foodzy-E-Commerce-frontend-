@@ -3,8 +3,17 @@ import StarIcon from "../Icon/StarIcon";
 import CardButtonIcon from "../Icon/CardButtonIcon";
 
 const DisplayProducts = (product) => {
-  const { title, thumbnail, brand, rating, price, availability_status } =
-    product.product;
+  const {
+    title,
+    thumbnail,
+    brand,
+    rating,
+    price,
+    availability_status,
+  } = product.product;
+
+
+
 
   return (
     <div className="p-8 rounded-lg border border-[#E9E9E9] ">

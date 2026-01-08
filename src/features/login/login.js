@@ -149,15 +149,12 @@ const authSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
-
         const { id, role } = action.payload;
-
         const user = state.users.find((u) => u.id === id);
         if (user) {
           user.role_ENUM = role;
         }
       })
-
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
