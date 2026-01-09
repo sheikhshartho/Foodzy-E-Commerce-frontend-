@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteOrder, updateOrderStatus } from "../features/products/order";
 
 const ShowOrders = (order) => {
-  console.log(order);
+  const dispatch = useDispatch();
   const {
     customer_name,
     customer_address,
@@ -10,9 +12,19 @@ const ShowOrders = (order) => {
     order_status,
     thumbnail,
     product_name,
+    order_id,
   } = order.order;
 
   const isComfram = order_status === "completed";
+
+  const hanldleDelet = () => {
+    dispatch(deleteOrder(order_id));
+  };
+
+  const handleConfirm = () => {
+    dispatch(updateOrderStatus({ id: order_id, status: "completed" }));
+  };
+
 
   return (
     <div className="p-8 rounded-lg border border-[#E9E9E9] mt-4 flex justify-between items-end ">
@@ -50,16 +62,18 @@ const ShowOrders = (order) => {
       </div>
       <div className="flex gap-2 items-center">
         <button
+          onClick={handleConfirm}
           className={`text-sm p-2 text-white  rounded-md  cursor-pointer ${
             isComfram ? "bg-[#03a00b]" : "bg-[#007bff]"
           } `}
         >
-          {" "}
-          Comfram{" "}
+          {isComfram ? "Completed" : "Confirm Order"}
         </button>
-        <button className=" bg-[#F53E32] w-25 text-white text-sm  p-2 rounded cursor-pointer">
-          {" "}
-          Reject{" "}
+        <button
+          onClick={hanldleDelet}
+          className=" bg-[#F53E32] w-25 text-white text-sm  p-2 rounded cursor-pointer"
+        >
+          {isComfram ? "Delete" : "Cancel"}
         </button>
       </div>
     </div>

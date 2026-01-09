@@ -65,6 +65,23 @@ export const deleteOrder = createAsyncThunk(
   }
 );
 
+// UPDATE ORDER STATUS
+export const updateOrderStatus = createAsyncThunk(
+  "Order/updateOrderStatus",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      await axios.put(
+        "http://localhost/root-project/Backend/orders/create.php",
+        { id, status }
+      );
+      return { id, status };
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
+
 const orderSlice = createSlice({
   name: "order",
   initialState: {
@@ -122,13 +139,31 @@ const orderSlice = createSlice({
       .addCase(deleteOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = state.orders.filter(
-          (order) => order.id !== action.payload
+          (order) => order.order_id !== action.payload
         );
       })
+
       .addCase(deleteOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // UPDATE ORDER STATUS
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.loading = true; 
+        state.error = null;
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        const { id, status } = action.payload;
+        state.loading = false;
+        state.orders = state.orders.map((order) =>
+          order.order_id === id ? { ...order, order_status: status } : order
+        );
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; 
       });
+
   },
 });
 

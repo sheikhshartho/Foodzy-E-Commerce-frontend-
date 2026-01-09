@@ -42,10 +42,10 @@ const Header = () => {
           <User />
           <h1>Account</h1>
         </Link>
-        <Link to={'/card'} className="flex items-center gap- cursor-pointer">
+        {/* <Link to={'/card'} className="flex items-center gap- cursor-pointer">
           <ShoppingCart />
           <h1>Cart</h1>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

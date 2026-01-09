@@ -3,8 +3,9 @@ import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../public/Group.svg";
 import { useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 const Register = () => {
-  const { loading} = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -22,6 +23,12 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const hasEmpty = Object.values(formData).some((value) => value === "");
+    if (hasEmpty) {
+      toast.error("Please fill all fields!");
+      return;
+    }
+
     try {
       const res = await axios.post(
         "http://localhost/root-project/Backend/auth/user.php",
@@ -37,6 +44,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="w-full max-w-md bg-white p-8 rounded-lg  border border-[#E9E9E9]">
         <div className="flex items-center gap-0 justify-center mb-6">
           <div className="w-15 h-15">
@@ -87,6 +95,8 @@ const Register = () => {
             <input
               type="password"
               name="password"
+              minLength={6}
+              maxLength={15}
               placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}

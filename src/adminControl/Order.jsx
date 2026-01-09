@@ -11,7 +11,6 @@ const Order = () => {
     dispatch(showOrders());
   }, [dispatch]);
 
-  console.log(orders);
   return (
     <div className="">
       <div className="flex items-center justify-between p-8 rounded-lg border border-[#E9E9E9] mt-4">
@@ -25,7 +24,7 @@ const Order = () => {
       </div>
       {showOrder &&
         orders.map((order) => (
-          <ShowOrders key={order.id} order={order} />
+          <ShowOrders key={order.order_id} order={order} />
         ))}
     </div>
   );

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PostProduct } from "../features/products/products";
-
-// resetState;
+import toast, { Toaster } from "react-hot-toast";
 
 const AddProducts = () => {
   const dispatch = useDispatch();
@@ -31,11 +30,40 @@ const AddProducts = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const hasEmpty = Object.values(productData).some((value) => value === "");
+    if (hasEmpty) {
+      toast.error("Please fill all fields!");
+      return;
+    }
     dispatch(PostProduct(productData));
   };
 
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setProductData({
+          title: "",
+          category: "",
+          description: "",
+          price: "",
+          discount: "",
+          rating: "",
+          stock: "",
+          brand: "",
+          thumbnail: "",
+          warranty: "",
+          shipping: "",
+          availability: "",
+          returnPolicy: "",
+        });
+        toast.success("Product added Successfully");
+      }, 0);
+    }
+  }, [success, dispatch]);
+
   return (
     <div className="w-full">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="max-w-360 mx-auto mt-8">
         <div className="flex items-center gap-2  ">
           <div className="w-full">
@@ -225,13 +253,6 @@ const AddProducts = () => {
             />
           </div>
         </div>
-        {success && (
-          <div className="bg-green-100 border border-green-200 p-5 rounded-2xl my-4 flex  items-center justify-between">
-            <h1 className="font-bold text-green-800 text-xl">
-              Your product added successfully
-            </h1>
-          </div>
-        )}
         <button
           onClick={handleSubmit}
           className="bg-[#F53E32] w-30 text-white p-2 rounded cursor-pointer"

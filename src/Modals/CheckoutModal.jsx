@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sendOrder } from "../features/products/order";
 import toast, { Toaster } from "react-hot-toast";
 const CheckoutModal = ({ product, setShowModal }) => {
   const dispatch = useDispatch();
-  const { success } = useSelector((state) => state.order);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     customer_name: "",
     customer_address: "",
@@ -35,11 +36,20 @@ const CheckoutModal = ({ product, setShowModal }) => {
   };
 
   const handleOrder = () => {
+    if (loading) return;
+
+    const hasEmpty = Object.values(formData).some((value) => value === "");
+    if (hasEmpty) {
+      toast.error("Please fill all fields!");
+      return;
+    }
+
+    setLoading(true);
+
     const orderData = {
       customer_name: formData.customer_name,
       customer_address: formData.customer_address,
       customer_phone: formData.customer_phone,
-
       product_name: product.title,
       thumbnail: product.thumbnail,
       total_price: product.price,
@@ -47,14 +57,18 @@ const CheckoutModal = ({ product, setShowModal }) => {
     };
 
     dispatch(sendOrder(orderData));
-    setShowModal(false);
+
+    toast.success("Order placed successfully!");
+
+    setTimeout(() => {
+      setLoading(false);
+      setShowModal(false);
+    }, 1000);
   };
-  
 
   return (
     <div>
-      {success && toast.success("Successfully toasted!")}
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="fixed inset-0 z-50 flex items-center justify-center">
         <div className="absolute inset-0 bg-black opacity-50 " />
 
@@ -91,7 +105,6 @@ const CheckoutModal = ({ product, setShowModal }) => {
             <input
               name="customer_name"
               type="text"
-              // value={formData.customer_name}
               onChange={handleChange}
               placeholder="Enter Name"
               className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
@@ -104,7 +117,6 @@ const CheckoutModal = ({ product, setShowModal }) => {
             <input
               name="customer_address"
               type="text"
-              // value={formData.customer_address}
               onChange={handleChange}
               placeholder="Enter address"
               className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
@@ -116,18 +128,27 @@ const CheckoutModal = ({ product, setShowModal }) => {
             </label>
             <input
               name="customer_phone"
-              // value={formData.customer_phone}
               onChange={handleChange}
-              type="text"
+              type="Number"
               placeholder="Enter address"
               className=" border border-[#E9E9E9] text-black mt-1 w-full px-4 py-2  rounded-md focus:outline-none  "
             />
           </div>
           <button
             onClick={handleOrder}
-            className="w-full bg-[#F53E32] text-white py-2 rounded mt-4 cursor-pointer"
+            disabled={loading}
+            className={`w-full py-2 rounded mt-4  text-white
+            ${
+              loading
+                ? "bg-[#f53f32a1] cursor-not-allowed"
+                : "bg-[#F53E32] cursor-pointer"
+            } `}
           >
-            Odder
+            {loading ? (
+              <span className="loading loading-dots loading-md"></span>
+            ) : (
+              "Order"
+            )}
           </button>
           <button
             onClick={() => setShowModal(false)}

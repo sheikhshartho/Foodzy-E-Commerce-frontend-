@@ -19,7 +19,7 @@ const UsersProfile = () => {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className=" w-30.25  bg-[#F53E32] w-20 text-white p-2 rounded cursor-pointer"
+          className=" w-30.25  bg-[#F53E32] text-white p-2 rounded cursor-pointer"
         >
           {loading ? (
             <span className="loading loading-dots loading-sm"></span>

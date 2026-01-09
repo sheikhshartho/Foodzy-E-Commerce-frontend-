@@ -23,10 +23,7 @@ const LogoutModal = ({ setShowModal }) => {
   return (
     <div>
       <div className="fixed inset-0 z-50 flex items-center justify-center">
-        {/* Backdrop */}
         <div className="absolute inset-0 bg-black opacity-50 " />
-
-        {/* Modal */}
         <div className="relative bg-white rounded-lg shadow-xl px-4 py-6">
           <div className="p-6 flex items-center gap-4">
             <div>

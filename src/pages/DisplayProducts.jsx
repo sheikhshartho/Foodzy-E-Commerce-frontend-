@@ -35,10 +35,10 @@ const DisplayProducts = (product) => {
         </p>
         <div className="flex justify-between mt-5">
           <p className="font-bold text-5 text-[#3BB77E]"> ${price}</p>
-          <button className="bg-[#F53E32] flex items-center gap-1 text-[14px] text-white font-bold px-4 py-2 rounded-lg cursor-pointer ">
+          {/* <button className="bg-[#F53E32] flex items-center gap-1 text-[14px] text-white font-bold px-4 py-2 rounded-lg cursor-pointer ">
             <CardButtonIcon />
             Add
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
