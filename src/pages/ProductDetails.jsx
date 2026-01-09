@@ -4,7 +4,10 @@ import axios from "axios";
 import StarIcon from "../Icon/StarIcon";
 import OrderNowIcon from "../Icon/OrderNowIcon";
 
+import CheckoutModal from "../Modals/CheckoutModal";
+
 const ProductDetails = () => {
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -29,7 +32,6 @@ const ProductDetails = () => {
   if (loading) return <p>Loading...</p>;
   if (!product) return <p>Product not found</p>;
 
-  console.log(product);
   const {
     rating,
     brand,
@@ -55,6 +57,9 @@ const ProductDetails = () => {
 
   return (
     <div className="max-w-360 mx-auto ">
+      {showModal && (
+        <CheckoutModal product={product} setShowModal={setShowModal} />
+      )}
       <div className="flex items-center gap-3 ">
         <div className="w-[40%] overflow-hidden">
           <img className="w-full h-full object-cover" src={thumbnail} alt="" />
@@ -83,10 +88,13 @@ const ProductDetails = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-between items-center" >
+          <div className="flex justify-between items-center">
             <h1 className="font-bold text-3xl text-[#F53E32]">${price}</h1>
-            <button className="bg-[#F53E32] flex items-center gap-1 text-[14px] text-white font-bold px-4 py-2 rounded-lg cursor-pointer ">
-              <OrderNowIcon/>
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-[#F53E32] flex items-center gap-1 text-[14px] text-white font-bold px-4 py-2 rounded-lg cursor-pointer "
+            >
+              <OrderNowIcon />
               Order Now
             </button>
           </div>

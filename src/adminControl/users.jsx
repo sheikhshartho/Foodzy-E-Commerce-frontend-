@@ -15,10 +15,10 @@ const Users = () => {
   return (
     <div className="">
       <div className="flex items-center justify-between p-8 rounded-lg border border-[#E9E9E9] mt-4">
-        <h1 className="text-2xl font-bold mb-4">See all user</h1>
+        <h1 className="text-2xl font-bold mb-4">See all users</h1>
         <button
           onClick={() => setShowUser(!showUser)}
-          className=" bg-[#F53E32] text-white p-2 rounded cursor-pointer "
+          className=" w-30.25  bg-[#F53E32] text-white p-2 rounded cursor-pointer "
         >
           {showUser ? "Hide user" : "Show user"}
         </button>
